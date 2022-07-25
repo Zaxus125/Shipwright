@@ -1,0 +1,17 @@
+# A profile specifically for Anbernic RG devices
+
+ifeq (,$(wildcard ../profile/Makefile.arm))
+$(error Something went wrong)
+endif
+
+# TODO: probably consider better pathing, perhaps use an absolute dir $VAR
+include ../profile/Makefile.arm
+
+NO_GLEW = 1
+NO_X11 = 1
+NO_PULSE = 1
+USE_OPENGLES = 1
+
+# TODO: Have this be a parameter set by builder
+# Consider not setting here at all, and making the builder set it themselves if CROSS
+STORMLIB_CMAKE = -S ../StormLib -DCMAKE_TOOLCHAIN_FILE=/opt/aarch64-buildroot-linux-gnu_sdk-buildroot/share/buildroot/toolchainfile.cmake

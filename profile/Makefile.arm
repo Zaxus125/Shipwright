@@ -1,0 +1,21 @@
+# TODO: probably support a list of options here
+ifeq (,$(findstring aarch,$(shell uname -m)))
+ifeq ($(CROSS),)
+$(error Cross compilation profile used but CROSS is not set)
+endif
+CROSS ?=
+endif
+
+CC  := $(CROSS)gcc
+CXX := $(CROSS)g++
+LD  := $(CROSS)ld
+AR  := $(CROSS)ar
+
+ARCH = arm
+
+# TODO: Check proper flags
+ARCH_CXXFLAGS = -march=armv8-a+crc+crypto -fPIE #-mtune-cortex-a57 -fPIE
+ARCH_CFLAGS = -march=armv8-a+crc+crypto -fPIE #-mtune-cortex-a57 -fPIE
+
+# Disable lld for ZAPD
+LLD = 0
