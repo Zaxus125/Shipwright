@@ -18,10 +18,14 @@ namespace Ship {
             return false;
         }
 
+	#if SDL_PATCHLEVEL >= 14
         if (SDL_GameControllerHasSensor(NewCont, SDL_SENSOR_GYRO)) {
             SDL_GameControllerSetSensorEnabled(NewCont, SDL_SENSOR_GYRO, SDL_TRUE);
             supportsGyro = true;
         }
+	#else
+		supportsGyro = false;
+	#endif
 
         char GuidBuf[33];
         SDL_JoystickGetGUIDString(SDL_JoystickGetDeviceGUID(physicalSlot), GuidBuf, sizeof(GuidBuf));
@@ -148,6 +152,7 @@ namespace Ship {
             }
         }
 
+	#if SDL_PATCHLEVEL >= 14
         if (supportsGyro && profile.UseGyro) {
 
             float gyroData[3];
@@ -174,6 +179,7 @@ namespace Ship {
             wGyroX *= gyro_sensitivity;
             wGyroY *= gyro_sensitivity;
         }
+	#endif
 
         dwPressedButtons[slot] = 0;
 
@@ -390,6 +396,7 @@ namespace Ship {
             }
         }
 
+	#if SDL_PATCHLEVEL >= 14
         if (SDL_GameControllerHasLED(Cont)) {
             switch (controller->ledColor) {
             case 0:
@@ -406,6 +413,7 @@ namespace Ship {
                 break;
             }
         }
+	#endif
     }
 
     const char* AxisNames[] = {
