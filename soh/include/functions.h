@@ -61,7 +61,7 @@ u32 func_80001F48(void);
 u32 func_80001F8C(void);
 u32 Locale_IsRegionNative(void);
 #if !defined(__APPLE__) && !defined(__SWITCH__)
-void __assert(const char* exp, const char* file, s32 line);
+//void __assert(const char* exp, const char* file, s32 line);
 #endif
 #if defined(__APPLE__) && defined(NDEBUG)
 void __assert(const char* exp, const char* file, s32 line);
