@@ -57,7 +57,24 @@ ifeq ($(UNAME), Darwin)
 else
   # The linker flags here should match what is needed by soh.elf
   #  Really, all these dependencies are in libultraship.a, so perhaps there should be a include Makefile that computes them
-  LDFLAGS += -lpng -lGL -lGLEW -lX11 -lz -lSDL2 -lpulse
+  LDFLAGS += -lpng -lz -lSDL2
+# TODO: this is temporary. Either unify with soh/Makefile,
+#  or better yet, figure out if the whole libultraship.a is even needed.
+#  I don't see a need for these libraries to be linked if they aren't used.
+ifeq ($(USE_OPENGLES),1)
+  LDFLAGS += -lGLESv2
+else
+  LDFLAGS += -lGL
+endif
+ifneq ($(NO_GLEW), 1)
+  LDFLAGS += -lGLEW
+endif
+ifneq ($(NO_X11), 1)
+  LDFLAGS += -lX11
+endif
+ifneq ($(NO_PULSE), 1)
+  LDFLAGS += -lpulse
+endif
 endif
 
 # Use LLD if available. Set LLD=0 to not use it
