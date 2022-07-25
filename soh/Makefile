@@ -16,6 +16,7 @@ DEBUG ?= 1
 OPTFLAGS ?= -O0
 LTO ?= 0
 NO_GLEW ?= 0
+NO_X11 ?= 0
 
 WARN := \
 	-Wno-return-type \
@@ -80,9 +81,11 @@ INC_DIRS := $(addprefix -I, \
 )
 
 ifeq ($(UNAME), Linux) #LINUX
+ifneq ($(NO_X11), 1)
 	INC_DIRS += $(addprefix -I, \
 		/opt/X11/include \
 )
+endif
 endif
 
 LDDIRS := $(addprefix -L, \
@@ -90,9 +93,11 @@ LDDIRS := $(addprefix -L, \
 )
 
 ifeq ($(UNAME), Linux) #LINUX
+ifneq ($(NO_X11), 1)
 	LDDIRS += $(addprefix -L, \
 		/opt/X11/lib \
 )
+endif
 endif
 
 LDLIBS := \
@@ -109,7 +114,6 @@ LDLIBS := \
 ifeq ($(UNAME), Linux) #LINUX
 LDLIBS += \
 	$(addprefix -l, \
-	X11 \
 	SDL2 \
 	pulse \
 )
@@ -120,6 +124,9 @@ LDLIBS += -lGL
 endif
 ifneq ($(NO_GLEW), 1)
 LDLIBS += -lGLEW
+endif
+ifneq ($(NO_X11), 1)
+LDLIBS += -lX11
 endif
 endif
 

@@ -86,6 +86,11 @@ ifeq ($(USE_OPENGLES),1)
 	CFLAGS += -DUSE_OPENGLES
 endif
 
+ifeq ($(NO_X11),1)
+	CXXFLAGS += -DNO_X11
+	CFLAGS += -DNO_X11
+endif
+
 
 SRC_DIRS  := $(shell find . -type d -not -path "*build*")
 

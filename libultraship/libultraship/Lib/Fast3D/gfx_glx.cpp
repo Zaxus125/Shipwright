@@ -1,4 +1,5 @@
 #ifdef __linux__
+#ifndef NO_X11
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -620,4 +621,5 @@ struct GfxWindowManagerAPI gfx_glx = {
     gfx_glx_set_frame_divisor,
 };
 
+#endif
 #endif

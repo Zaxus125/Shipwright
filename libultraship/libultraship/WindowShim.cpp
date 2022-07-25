@@ -51,7 +51,7 @@ void SetWindowManager(struct GfxWindowManagerAPI** WmApi, struct GfxRenderingAPI
         *RenderingApi = &gfx_opengl_api;
         *WmApi = &gfx_sdl;
     }
-#ifdef __linux__
+#if defined(__linux__) && !defined(NO_X11)
     if (gfx_backend == "glx") {
         *RenderingApi = &gfx_opengl_api;
         *WmApi = &gfx_glx;
