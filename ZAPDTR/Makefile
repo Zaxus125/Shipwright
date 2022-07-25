@@ -16,6 +16,9 @@ else
   CXX ?= g++
 endif
 
+# TODO: This straight up overrides the CXX above, consider not doing that
+include ../profile/Makefile.inc
+
 INC := -I ZAPD -I lib/elfio -I lib/libgfxd -I lib/tinyxml2 -I ZAPDUtils
 CXXFLAGS := -fpic -std=c++17 -Wall -Wextra -fno-omit-frame-pointer
 OPTFLAGS :=
@@ -52,6 +55,8 @@ ifeq ($(UNAME), Darwin)
   LDFLAGS += $(shell pkg-config --libs glew libpng zlib) $(shell sdl2-config --libs) -framework OpenGL -framework Foundation
   INC += $(shell pkg-config --cflags libpng)
 else
+  # The linker flags here should match what is needed by soh.elf
+  #  Really, all these dependencies are in libultraship.a, so perhaps there should be a include Makefile that computes them
   LDFLAGS += -lpng -lGL -lGLEW -lX11 -lz -lSDL2 -lpulse
 endif
 
@@ -123,7 +128,7 @@ lib/libgfxd/libgfxd.a:
 
 .PHONY: StormLib
 StormLib:
-	LDFLAGS="" cmake -B ../StormLib/build -S ../StormLib
+	LDFLAGS="" cmake -B ../StormLib/build -S ../StormLib $(STORMLIB_CMAKE)
 	$(MAKE) -C ../StormLib/build
 
 .PHONY: ExporterTest

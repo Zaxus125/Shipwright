@@ -11,6 +11,8 @@ DEBUG ?= 1
 OPTFLAGS ?= -O0
 LTO ?= 0
 
+include ../profile/Makefile.inc
+
 # flag to save whether the compiler being used is clang or gcc by checking CXX --version
 CXX_IS_CLANG ?= $(shell $(CXX) --version | grep -c clang)
 ifeq ($(CXX_IS_CLANG),1)

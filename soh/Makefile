@@ -19,6 +19,8 @@ NO_GLEW ?= 0
 NO_X11 ?= 0
 NO_PULSE ?= 0
 
+include ../profile/Makefile.inc
+
 WARN := \
 	-Wno-return-type \
 	-Wno-unused-command-line-argument \
@@ -32,8 +34,13 @@ CFLAGS := $(WARN) -std=c99 -D_GNU_SOURCE -no-pie -nostdlib
 LDFLAGS :=
 
 ifeq ($(UNAME), Linux) #LINUX
+ifneq ($(ARCH_CFLAGS),)
+	CXXFLAGS += $(ARCH_CXXFLAGS)
+	CFLAGS += $(ARCH_CFLAGS)
+else
 	CXXFLAGS += -mhard-float -msse2 -mfpmath=sse
 	CFLAGS += -mhard-float -msse2 -mfpmath=sse
+endif
 endif
 
 ifeq ($(UNAME), Darwin) #APPLE
