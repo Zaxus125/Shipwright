@@ -61,7 +61,7 @@ u32 func_80001F48(void);
 u32 func_80001F8C(void);
 u32 Locale_IsRegionNative(void);
 #ifndef __APPLE__
-void __assert(const char* exp, const char* file, s32 line);
+//void __assert(const char* exp, const char* file, s32 line);
 #endif
 void isPrintfInit(void);
 void osSyncPrintfUnused(const char* fmt, ...);
