@@ -17,6 +17,7 @@ OPTFLAGS ?= -O0
 LTO ?= 0
 NO_GLEW ?= 0
 NO_X11 ?= 0
+NO_PULSE ?= 0
 
 WARN := \
 	-Wno-return-type \
@@ -115,7 +116,6 @@ ifeq ($(UNAME), Linux) #LINUX
 LDLIBS += \
 	$(addprefix -l, \
 	SDL2 \
-	pulse \
 )
 ifeq ($(USE_OPENGLES),1)
 LDLIBS += -lGLESv2
@@ -127,6 +127,9 @@ LDLIBS += -lGLEW
 endif
 ifneq ($(NO_X11), 1)
 LDLIBS += -lX11
+endif
+ifneq ($(NO_PULSE), 1)
+LDLIBS += -lpulse
 endif
 endif
 

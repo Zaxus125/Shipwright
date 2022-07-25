@@ -91,6 +91,11 @@ ifeq ($(NO_X11),1)
 	CFLAGS += -DNO_X11
 endif
 
+ifeq ($(NO_PULSE),1)
+	CXXFLAGS += -DNO_PULSE
+	CFLAGS += -DNO_PULSE
+endif
+
 
 SRC_DIRS  := $(shell find . -type d -not -path "*build*")
 
