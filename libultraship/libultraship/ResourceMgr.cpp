@@ -95,7 +95,7 @@ namespace Ship {
 
 			//Lock.unlock();
 
-			SPDLOG_DEBUG("Loaded File {} on ResourceMgr thread", ToLoad->path);
+			//SPDLOG_DEBUG("Loaded File {} on ResourceMgr thread", ToLoad->path);
 
 			ToLoad->FileLoadNotifier.notify_all();
 		}
@@ -146,7 +146,7 @@ namespace Ship {
 						ToLoad->resource = Res;
 						ResourceCache[Res->file->path] = Res;
 
-						SPDLOG_DEBUG("Loaded Resource {} on ResourceMgr thread", ToLoad->file->path);
+						//SPDLOG_DEBUG("Loaded Resource {} on ResourceMgr thread", ToLoad->file->path);
 
 						// Disabled for now because it can cause random crashes
 						//FileCache[Res->File->path] = nullptr;
@@ -191,7 +191,7 @@ namespace Ship {
 		// File NOT already loaded...?
 		auto fileCacheFind = FileCache.find(FilePath);
 		if (fileCacheFind == FileCache.end()) {
-			SPDLOG_TRACE("Cache miss on File load: {}", FilePath.c_str());
+			//SPDLOG_TRACE("Cache miss on File load: {}", FilePath.c_str());
 			std::shared_ptr<File> ToLoad = std::make_shared<File>();
 			ToLoad->path = FilePath;
 
@@ -254,7 +254,7 @@ namespace Ship {
 		auto resCacheFind = ResourceCache.find(FilePath);
 		if (resCacheFind == ResourceCache.end() || resCacheFind->second->isDirty/* || !FileData->bIsLoaded*/) {
 			if (resCacheFind == ResourceCache.end()) {
-				SPDLOG_TRACE("Cache miss on Resource load: {}", FilePath);
+				//SPDLOG_TRACE("Cache miss on Resource load: {}", FilePath);
 			}
 
 			std::shared_ptr<ResourcePromise> Promise = std::make_shared<ResourcePromise>();
