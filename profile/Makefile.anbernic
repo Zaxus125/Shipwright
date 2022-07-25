@@ -12,6 +12,5 @@ NO_X11 = 1
 NO_PULSE = 1
 USE_OPENGLES = 1
 
-# TODO: Have this be a parameter set by builder
-# Consider not setting here at all, and making the builder set it themselves if CROSS
-STORMLIB_CMAKE = -S ../StormLib -DCMAKE_TOOLCHAIN_FILE=/opt/aarch64-buildroot-linux-gnu_sdk-buildroot/share/buildroot/toolchainfile.cmake
+ARCH_CFLAGS = -fPIE -march=armv8-a+crc+crypto -mtune=cortex-a72
+ARCH_CXXFLAGS := $(ARCH_CFLAGS)

@@ -3,7 +3,12 @@ ifeq (,$(findstring aarch,$(shell uname -m)))
 ifeq ($(CROSS),)
 $(error Cross compilation profile used but CROSS is not set)
 endif
+ifeq ($(STORMLIB_CMAKE),)
+$(error Cross compilation profile used but STORMLIB_CMAKE is not set)
+endif
+else
 CROSS ?=
+STORMLIB_CMAKE ?=
 endif
 
 CC  := $(CROSS)gcc
@@ -14,8 +19,8 @@ AR  := $(CROSS)ar
 ARCH = arm
 
 # TODO: Check proper flags
-ARCH_CXXFLAGS = -march=armv8-a+crc+crypto -fPIE #-mtune-cortex-a57 -fPIE
-ARCH_CFLAGS = -march=armv8-a+crc+crypto -fPIE #-mtune-cortex-a57 -fPIE
+ARCH_CFLAGS = -fPIE -march=armv8-a+crc+crypto -mtune-cortex-a57
+ARCH_CXXFLAGS = $(ARCH_CFLAGS)
 
 # Disable lld for ZAPD
 LLD = 0
