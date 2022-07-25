@@ -75,6 +75,18 @@ ifneq ($(LTO),0)
 	CFLAGS += -flto
 endif
 
+ifeq ($(NO_GLEW),1)
+	CXXFLAGS += -DNO_GLEW
+	CFLAGS += -DNO_GLEW
+endif
+
+ifeq ($(USE_OPENGLES),1)
+# TODO consider making IMGUI define implicit in code?
+	CXXFLAGS += -DUSE_OPENGLES -DIMGUI_IMPL_OPENGL_ES3
+	CFLAGS += -DUSE_OPENGLES
+endif
+
+
 SRC_DIRS  := $(shell find . -type d -not -path "*build*")
 
 CXX_FILES := \

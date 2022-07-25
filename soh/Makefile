@@ -15,6 +15,7 @@ ASAN ?= 0
 DEBUG ?= 1
 OPTFLAGS ?= -O0
 LTO ?= 0
+NO_GLEW ?= 0
 
 WARN := \
 	-Wno-return-type \
@@ -110,10 +111,16 @@ LDLIBS += \
 	$(addprefix -l, \
 	X11 \
 	SDL2 \
-	GL \
-	GLEW \
 	pulse \
 )
+ifeq ($(USE_OPENGLES),1)
+LDLIBS += -lGLESv2
+else
+LDLIBS += -lGL
+endif
+ifneq ($(NO_GLEW), 1)
+LDLIBS += -lGLEW
+endif
 endif
 
 ifeq ($(UNAME), Darwin) #APPLE
