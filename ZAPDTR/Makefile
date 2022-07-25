@@ -88,7 +88,7 @@ endif
 
 UNAMEM := $(shell uname -m)
 ifneq ($(UNAME), Darwin)
-  LDFLAGS += -Wl,-export-dynamic -lstdc++fs
+  LDFLAGS += -Wl,-export-dynamic #-lstdc++fs
   EXPORTERS := -Wl,--whole-archive ../OTRExporter/OTRExporter/OTRExporter.a -Wl,--no-whole-archive
 else
   EXPORTERS := -Wl,-force_load ../OTRExporter/OTRExporter/OTRExporter.a
