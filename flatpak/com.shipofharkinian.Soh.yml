@@ -1,0 +1,50 @@
+app-id: com.shipofharkinian.Soh
+runtime: org.freedesktop.Platform
+runtime-version: '21.08'
+sdk: org.freedesktop.Sdk
+command: start-soh.sh
+finish-args:
+  - --persist=.
+  - --socket=x11
+  - --socket=pulseaudio
+  - --share=ipc
+  - --device=dri
+  - --device=all
+modules:
+  - name: soh
+    buildsystem: simple
+    build-commands:
+       - cp baserom_non_mq.z64 OTRExporter/
+       - LIBRARY_PATH=/app/lib/ make -C soh setup -j$(nproc) OPTFLAGS=-O2 DEBUG=0 NO_GLEW=1
+       - LIBRARY_PATH=/app/lib/ make -C soh -j$(nproc) OPTFLAGS=-O2 DEBUG=0 NO_GLEW=1
+       - install -D start-soh.sh /app/bin/start-soh.sh
+       - install -D soh/soh.elf /app/bin/soh.elf
+    sources:
+       - type: git
+         path: ../
+         # HACK: shouldn't need to do this, but you can't just point to local state
+         #  Create a local tag called "flatpak" on whatever branch/commit you want to build
+         # TODO: probably just point to develop-* or something on upstream url
+         tag: flatpak 
+
+       - type: file
+         path: baserom_non_mq.z64
+
+       - type: file
+         path: start-soh.sh
+
+## This *works*, but I don't see the point in increasing build complexity when it doesn't seem to be required.
+## If uncommenting this, remove NO_GLEW=1 in the commands above
+#    modules:
+#        - name: glew
+#          buildsystem: cmake
+#          sources:
+#            - type: git
+#              url: https://github.com/Perlmint/glew-cmake.git
+#        - name: glu
+#          config-opts: "--disable-static"
+#          sources:
+#            - type: archive
+#              url: https://mesa.freedesktop.org/archive/glu/glu-9.0.2.tar.xz
+#              sha256: "6e7280ff585c6a1d9dfcdf2fca489251634b3377bfc33c29e4002466a38d02d4"
+#          cleanup: [ "/include", "/lib/*.a", "/lib/*.la", "/lib/pkgconfig" ]

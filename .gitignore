@@ -407,6 +407,7 @@ oot.otr
 shipofharkinian.ini
 shipofharkinian.json
 Makefile.local
+flatpak/*
 
 # Xcode
 xcuserdata/
@@ -417,3 +418,4 @@ xcuserdata/
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
+
