@@ -14,7 +14,7 @@ def BuildOTR(xmlPath, rom):
     with open("Extract/version", "wb") as f:
         f.write(struct.pack('<L', checksum))
 
-    zapd_exe = "x64\\Release\\ZAPD.exe" if sys.platform == "win32" else "../ZAPDTR/ZAPD.out"
+    zapd_exe = sys.argv[1] if len(sys.argv) > 1 else "x64\\Release\\ZAPD.exe" if sys.platform == "win32" else "../ZAPDTR/ZAPD.out"
     exec_cmd = [zapd_exe, "ed", "-i", xmlPath, "-b", rom, "-fl", "CFG/filelists",
             "-o", "placeholder", "-osf", "placeholder", "-gsf", "1",
             "-rconf", "CFG/Config.xml", "-se", "OTR"]
